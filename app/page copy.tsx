@@ -4,19 +4,20 @@ import Webcam from "react-webcam";
 import { v4 as uuidv4 } from "uuid";
 
 export default function CameraPage() {
+  // 👇 give webcamRef a proper type
   const webcamRef = useRef<Webcam>(null);
   const [imgSrc, setImgSrc] = useState<string | null>(null);
 
   const capture = useCallback(() => {
+    // ✅ check for null before using current
     if (webcamRef.current) {
       const imageSrc = webcamRef.current.getScreenshot();
       if (imageSrc) setImgSrc(imageSrc);
     }
   }, [webcamRef]);
 
-  // ✅ Try to use back camera (mobile)
   const videoConstraints = {
-    facingMode: { exact: "environment" },
+    facingMode: "user",
   };
 
   return (
